@@ -23,15 +23,16 @@ public class Entry {
     private String name;
     private LocalDate date;
     private double value;
-    private String classification;
+    @ManyToOne
+    private Type type;
     private String description;
 
-    public Entry(EntryForm entryForm){
+    public Entry(EntryForm entryForm, Type type){
 
         this.name = entryForm.getName();
         this.date = entryForm.getDate();
         this.value = entryForm.getValue();
-        this.classification = entryForm.getClassification();
+        this.type = type;
         this.description = entryForm.getDescription();
     }
 

@@ -11,7 +11,7 @@ public class EntryMapper {
                 .name(entry.getName())
                 .date(entry.getDate())
                 .value(entry.getValue())
-                .classification(entry.getClassification())
+                .classification(entry.getType().getName())
                 .description(entry.getDescription())
                 .build();
 
