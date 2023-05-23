@@ -1,5 +1,6 @@
 package br.inatel.projetoc317back.model;
 
+import br.inatel.projetoc317back.controller.form.EntryForm;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +15,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "entry")
 public class Entry {
 
     @Id
@@ -25,4 +25,14 @@ public class Entry {
     private double value;
     private String classification;
     private String description;
+
+    public Entry(EntryForm entryForm){
+
+        this.name = entryForm.getName();
+        this.date = entryForm.getDate();
+        this.value = entryForm.getValue();
+        this.classification = entryForm.getClassification();
+        this.description = entryForm.getDescription();
+    }
+
 }
