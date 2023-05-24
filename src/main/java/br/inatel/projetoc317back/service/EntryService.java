@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @NoArgsConstructor
 public class EntryService {
@@ -32,8 +34,18 @@ public class EntryService {
         return EntryMapper.toEntryDto(entry);
     }
 
+    public List<EntryDto> listAllEntries() {
+
+        List<Entry> entryList = entryRepository.findAll();
+        List<EntryDto> entryDtoList = EntryMapper.toListEntryDto(entryList);
+        return entryDtoList;
+    }
+
     public Type fetchType(String classification){
+
         Type originalType = typeRepository.findByName(classification);
         return originalType;
     }
+
+
 }

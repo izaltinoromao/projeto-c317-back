@@ -29,4 +29,11 @@ public class EntryController {
         return entryService.newEntry(entryForm);
     }
 
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<EntryDto> listAllDrags() {
+
+        return entryService.listAllEntries();
+    }
+
 }
