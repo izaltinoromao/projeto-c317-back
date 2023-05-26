@@ -1,11 +1,8 @@
 package br.inatel.projetoc317back.service;
 
-import br.inatel.projetoc317back.controller.dto.EntryDto;
 import br.inatel.projetoc317back.controller.dto.TypeDto;
 import br.inatel.projetoc317back.controller.form.TypeForm;
-import br.inatel.projetoc317back.mapper.EntryMapper;
 import br.inatel.projetoc317back.mapper.TypeMapper;
-import br.inatel.projetoc317back.model.Entry;
 import br.inatel.projetoc317back.model.Type;
 import br.inatel.projetoc317back.model.rest.Message;
 import br.inatel.projetoc317back.repository.TypeRepository;
@@ -65,4 +62,5 @@ public class TypeService {
         TypeDto typeDto = TypeMapper.toTypeDto(type);
         return typeDto;
     }
+
 }

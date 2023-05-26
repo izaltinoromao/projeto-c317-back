@@ -1,6 +1,7 @@
 package br.inatel.projetoc317back.service;
 
 import br.inatel.projetoc317back.controller.dto.EntryDto;
+import br.inatel.projetoc317back.controller.dto.SpendDto;
 import br.inatel.projetoc317back.controller.form.EntryForm;
 import br.inatel.projetoc317back.mapper.EntryMapper;
 import br.inatel.projetoc317back.model.Entry;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -78,5 +80,20 @@ public class EntryService {
                 .orElseThrow(() -> new RuntimeException());
         EntryDto entryDto = EntryMapper.toEntryDto(entry);
         return entryDto;
+    }
+
+    public List<SpendDto> listAllSpend() {
+
+        List<Type> types = typeRepository.findAll();
+        List<SpendDto> spendList = new ArrayList<>();
+        types.forEach(t -> {
+            double value = 0;
+            List<Entry> entryList = t.getEntry();
+            value = entryList.stream().mapToDouble(el -> el.getValue()).sum();
+            SpendDto spendDto = new SpendDto(t.getName(), value);
+            spendList.add(spendDto);
+        });
+
+        return spendList;
     }
 }

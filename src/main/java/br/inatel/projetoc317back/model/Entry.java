@@ -2,10 +2,7 @@ package br.inatel.projetoc317back.model;
 
 import br.inatel.projetoc317back.controller.form.EntryForm;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -15,6 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @Entity
+@ToString (exclude = {"type"})
 public class Entry {
 
     @Id

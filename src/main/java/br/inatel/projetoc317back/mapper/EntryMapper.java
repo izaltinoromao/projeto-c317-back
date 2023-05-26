@@ -4,7 +4,6 @@ import br.inatel.projetoc317back.controller.dto.EntryDto;
 import br.inatel.projetoc317back.model.Entry;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class EntryMapper {

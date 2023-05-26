@@ -1,6 +1,7 @@
 package br.inatel.projetoc317back.controller;
 
 import br.inatel.projetoc317back.controller.dto.EntryDto;
+import br.inatel.projetoc317back.controller.dto.SpendDto;
 import br.inatel.projetoc317back.controller.form.EntryForm;
 import br.inatel.projetoc317back.model.rest.Message;
 import br.inatel.projetoc317back.service.EntryService;
@@ -42,6 +43,14 @@ public class EntryController {
     public List<EntryDto> listAllEntries() {
 
         return entryService.listAllEntries();
+    }
+
+    @GetMapping("/spend")
+    @ResponseStatus(HttpStatus.OK)
+    public List<SpendDto> listAllSpend() {
+
+
+        return entryService.listAllSpend();
     }
 
     @GetMapping("/getone")
