@@ -4,6 +4,7 @@ import br.inatel.projetoc317back.controller.dto.EntryDto;
 import br.inatel.projetoc317back.model.Entry;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class EntryMapper {
@@ -11,6 +12,7 @@ public class EntryMapper {
     public static EntryDto toEntryDto(Entry entry){
 
         EntryDto entryDto = EntryDto.builder()
+                .id(entry.getId())
                 .name(entry.getName())
                 .date(entry.getDate())
                 .value(entry.getValue())

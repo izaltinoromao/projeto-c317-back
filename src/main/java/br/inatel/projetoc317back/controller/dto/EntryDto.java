@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 @Builder
 public class EntryDto {
 
+    private UUID id;
     private String name;
     private LocalDate date;
     private double value;

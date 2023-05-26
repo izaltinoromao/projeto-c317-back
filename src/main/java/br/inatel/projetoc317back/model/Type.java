@@ -1,6 +1,5 @@
 package br.inatel.projetoc317back.model;
 
-import br.inatel.projetoc317back.controller.form.EntryForm;
 import br.inatel.projetoc317back.controller.form.TypeForm;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
