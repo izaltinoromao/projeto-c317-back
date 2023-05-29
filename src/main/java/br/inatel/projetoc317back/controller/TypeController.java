@@ -14,6 +14,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/type")
+@CrossOrigin(origins = "http://localhost:4200/")
 public class TypeController {
 
     private TypeService typeService;
@@ -53,7 +54,7 @@ public class TypeController {
 
     @DeleteMapping()
     @ResponseStatus(HttpStatus.OK)
-    public Message deleteType(@RequestParam @NotNull UUID id){
+    public Message deleteType(@RequestParam @NotNull UUID id) {
 
         return typeService.deleteTypeById(id);
     }

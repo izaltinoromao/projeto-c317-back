@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class EntryMapper {
 
-    public static EntryDto toEntryDto(Entry entry){
+    public static EntryDto toEntryDto(Entry entry) {
 
         EntryDto entryDto = EntryDto.builder()
                 .id(entry.getId())

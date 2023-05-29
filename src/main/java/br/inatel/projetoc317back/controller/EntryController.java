@@ -15,6 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/entry")
+@CrossOrigin(origins = "http://localhost:4200/")
 public class EntryController {
 
     private EntryService entryService;
@@ -49,7 +50,6 @@ public class EntryController {
     @ResponseStatus(HttpStatus.OK)
     public List<SpendDto> listAllSpend() {
 
-
         return entryService.listAllSpend();
     }
 
@@ -62,7 +62,7 @@ public class EntryController {
 
     @DeleteMapping()
     @ResponseStatus(HttpStatus.OK)
-    public Message deleteEntry(@RequestParam @NotNull UUID id){
+    public Message deleteEntry(@RequestParam @NotNull UUID id) {
 
         return entryService.deleteEntryById(id);
     }
