@@ -12,7 +12,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @Entity
-@ToString (exclude = {"type"})
 public class Entry {
 
     @Id
@@ -25,7 +24,7 @@ public class Entry {
     private Type type;
     private String description;
 
-    public Entry(EntryForm entryForm, Type type){
+    public Entry(EntryForm entryForm, Type type) {
 
         this.name = entryForm.getName();
         this.date = entryForm.getDate();

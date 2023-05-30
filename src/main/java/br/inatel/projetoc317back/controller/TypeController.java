@@ -7,6 +7,7 @@ import br.inatel.projetoc317back.service.TypeService;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,7 +54,7 @@ public class TypeController {
 
     @DeleteMapping()
     @ResponseStatus(HttpStatus.OK)
-    public Message deleteType(@RequestParam @NotNull UUID id){
+    public Message deleteType(@RequestParam @NotNull UUID id) {
 
         return typeService.deleteTypeById(id);
     }

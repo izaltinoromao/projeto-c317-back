@@ -49,7 +49,6 @@ public class EntryController {
     @ResponseStatus(HttpStatus.OK)
     public List<SpendDto> listAllSpend() {
 
-
         return entryService.listAllSpend();
     }
 
@@ -62,7 +61,7 @@ public class EntryController {
 
     @DeleteMapping()
     @ResponseStatus(HttpStatus.OK)
-    public Message deleteEntry(@RequestParam @NotNull UUID id){
+    public Message deleteEntry(@RequestParam @NotNull UUID id) {
 
         return entryService.deleteEntryById(id);
     }
