@@ -3,6 +3,7 @@ package br.inatel.projetoc317back.controller;
 import br.inatel.projetoc317back.controller.dto.EntryDto;
 import br.inatel.projetoc317back.controller.dto.SpendDto;
 import br.inatel.projetoc317back.controller.form.EntryForm;
+import br.inatel.projetoc317back.controller.form.FilterDateForm;
 import br.inatel.projetoc317back.model.rest.Message;
 import br.inatel.projetoc317back.service.EntryService;
 import jakarta.validation.Valid;
@@ -48,9 +49,9 @@ public class EntryController {
 
     @GetMapping("/spend")
     @ResponseStatus(HttpStatus.OK)
-    public List<SpendDto> listAllSpend() {
+    public List<SpendDto> listAllSpend(@RequestParam @NotNull int year, @RequestParam @NotNull int month) {
 
-        return entryService.listAllSpend();
+        return entryService.listAllSpend(year, month);
     }
 
     @GetMapping("/getone")
@@ -65,6 +66,13 @@ public class EntryController {
     public Message deleteEntry(@RequestParam @NotNull UUID id) {
 
         return entryService.deleteEntryById(id);
+    }
+
+    @GetMapping("/filter")
+    @ResponseStatus(HttpStatus.OK)
+    public List<EntryDto> listEntryFilter(@RequestBody @Valid FilterDateForm filterDateForm) {
+
+        return entryService.listEntryFilter(filterDateForm);
     }
 
 }

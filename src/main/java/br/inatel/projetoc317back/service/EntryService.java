@@ -3,6 +3,7 @@ package br.inatel.projetoc317back.service;
 import br.inatel.projetoc317back.controller.dto.EntryDto;
 import br.inatel.projetoc317back.controller.dto.SpendDto;
 import br.inatel.projetoc317back.controller.form.EntryForm;
+import br.inatel.projetoc317back.controller.form.FilterDateForm;
 import br.inatel.projetoc317back.exception.EntryNotFoundException;
 import br.inatel.projetoc317back.exception.TypeNotFoundException;
 import br.inatel.projetoc317back.mapper.EntryMapper;
@@ -15,6 +16,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -83,18 +86,36 @@ public class EntryService {
         return EntryMapper.toEntryDto(entry);
     }
 
-    public List<SpendDto> listAllSpend() {
+    public List<SpendDto> listAllSpend(int year, int month) {
 
-        List<Type> types = typeRepository.findAll();
+        YearMonth yearMonth = YearMonth.of(year, month);
+        LocalDate startOfMonth = yearMonth.atDay(1);
+        LocalDate endOfMonth = yearMonth.atEndOfMonth();
+
+        List<Entry> entries = entryRepository.findByDateBetween(startOfMonth, endOfMonth);
+
+        List<Type> types = entries.stream().map(Entry::getType).distinct().toList();
         List<SpendDto> spendList = new ArrayList<>();
-        types.forEach(t -> {
+        types.forEach(type -> {
             double value;
-            List<Entry> entryList = t.getEntry();
-            value = entryList.stream().mapToDouble(Entry::getValue).sum();
-            SpendDto spendDto = new SpendDto(t.getName(), value);
+            value = entries.stream().mapToDouble(e -> {
+                double entryValue = 0;
+                if(e.getType() == type){
+                    entryValue = e.getValue();
+                }
+                return entryValue;
+            }).sum();
+            SpendDto spendDto = new SpendDto(type.getName(), value);
             spendList.add(spendDto);
         });
 
         return spendList;
+    }
+
+    public List<EntryDto> listEntryFilter(FilterDateForm filterDateForm) {
+
+        LocalDate startDate = filterDateForm.getStartDate();
+        LocalDate endDate = filterDateForm.getEndDate();
+        return EntryMapper.toListEntryDto(entryRepository.findByDateBetween(startDate, endDate));
     }
 }
