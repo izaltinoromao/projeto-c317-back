@@ -2,6 +2,7 @@ package br.inatel.projetoc317back.controller.form;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +16,6 @@ public class TypeForm {
 
     @NotNull @NotEmpty
     private String name;
-    @NotNull @NotEmpty
+    @NotNull @Positive
     private Double portion;
 }

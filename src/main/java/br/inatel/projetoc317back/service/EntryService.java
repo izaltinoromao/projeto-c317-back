@@ -3,6 +3,8 @@ package br.inatel.projetoc317back.service;
 import br.inatel.projetoc317back.controller.dto.EntryDto;
 import br.inatel.projetoc317back.controller.dto.SpendDto;
 import br.inatel.projetoc317back.controller.form.EntryForm;
+import br.inatel.projetoc317back.exception.EntryNotFoundException;
+import br.inatel.projetoc317back.exception.TypeNotFoundException;
 import br.inatel.projetoc317back.mapper.EntryMapper;
 import br.inatel.projetoc317back.model.Entry;
 import br.inatel.projetoc317back.model.Type;
@@ -41,28 +43,28 @@ public class EntryService {
     public List<EntryDto> listAllEntries() {
 
         List<Entry> entryList = entryRepository.findAll();
-        List<EntryDto> entryDtoList = EntryMapper.toListEntryDto(entryList);
-        return entryDtoList;
+        return EntryMapper.toListEntryDto(entryList);
     }
 
     public EntryDto findEntryById(UUID id) {
 
-        Entry entry = entryRepository.findById(id).orElseThrow(() -> new RuntimeException());
-        EntryDto entryDto = EntryMapper.toEntryDto(entry);
-        return entryDto;
+        Entry entry = entryRepository.findById(id).orElseThrow(() -> new EntryNotFoundException(id));
+        return EntryMapper.toEntryDto(entry);
     }
 
     public Type fetchType(String classification){
 
         Type originalType = typeRepository.findByName(classification);
+        if (originalType == null) {throw new TypeNotFoundException(classification);}
         return originalType;
     }
 
 
     public Message deleteEntryById(UUID id) {
 
+        Entry entry = entryRepository.findById(id).orElseThrow(() -> new EntryNotFoundException(id));
         entryRepository.deleteById(id);
-        return new Message("The entry was deleted");
+        return new Message("The entry " + entry.getName() + " was deleted");
     }
 
     public EntryDto editEntry(UUID id, EntryForm newEntryForm) {
@@ -77,9 +79,8 @@ public class EntryService {
                     e.setDescription(newEntryForm.getDescription());
                     return entryRepository.save(e);
                 })
-                .orElseThrow(() -> new RuntimeException());
-        EntryDto entryDto = EntryMapper.toEntryDto(entry);
-        return entryDto;
+                .orElseThrow(() -> new EntryNotFoundException(id));
+        return EntryMapper.toEntryDto(entry);
     }
 
     public List<SpendDto> listAllSpend() {
@@ -87,9 +88,9 @@ public class EntryService {
         List<Type> types = typeRepository.findAll();
         List<SpendDto> spendList = new ArrayList<>();
         types.forEach(t -> {
-            double value = 0;
+            double value;
             List<Entry> entryList = t.getEntry();
-            value = entryList.stream().mapToDouble(el -> el.getValue()).sum();
+            value = entryList.stream().mapToDouble(Entry::getValue).sum();
             SpendDto spendDto = new SpendDto(t.getName(), value);
             spendList.add(spendDto);
         });

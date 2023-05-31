@@ -5,6 +5,7 @@ import br.inatel.projetoc317back.controller.dto.SpendDto;
 import br.inatel.projetoc317back.controller.form.EntryForm;
 import br.inatel.projetoc317back.model.rest.Message;
 import br.inatel.projetoc317back.service.EntryService;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,7 @@ import java.util.UUID;
 @RequestMapping("/entry")
 public class EntryController {
 
-    private EntryService entryService;
+    private final EntryService entryService;
 
     @Autowired
     public EntryController(EntryService entryService) {
@@ -26,14 +27,14 @@ public class EntryController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public EntryDto addEntry(@RequestBody EntryForm entryForm) {
+    public EntryDto addEntry(@RequestBody @Valid EntryForm entryForm) {
 
         return entryService.newEntry(entryForm);
     }
 
     @PutMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public EntryDto editEntry(@RequestParam @NotNull UUID id, @RequestBody EntryForm entryForm) {
+    public EntryDto editEntry(@RequestParam @NotNull UUID id, @RequestBody @Valid EntryForm entryForm) {
 
         return entryService.editEntry(id, entryForm);
     }
