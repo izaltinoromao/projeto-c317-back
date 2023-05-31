@@ -1,0 +1,37 @@
+version: "3.8"
+services:
+
+  postgre:
+    image: postgres
+    container_name: postgres-container
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgre
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=c317-back
+    networks:
+      - c317-network
+
+  c317-back:
+    hostname: C317-back
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: C317-back-container
+    ports:
+      - 8080:8080
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - PORT=8080
+      - POSTGRE_CONTAINER=postgre
+      - POSTGRE_USER=postgre
+      - POSTGRE_PASSWORD=root
+    networks:
+      - c317-network
+    depends_on:
+      - postgre
+
+networks:
+  c317-network:
+    driver: bridge
