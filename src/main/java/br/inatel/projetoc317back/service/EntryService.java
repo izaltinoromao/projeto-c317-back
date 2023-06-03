@@ -115,4 +115,25 @@ public class EntryService {
 
         return EntryMapper.toListEntryDto(entryRepository.findByDateBetween(startDate, endDate));
     }
+
+    public EntryDto getMostExpansive(LocalDate actualDate){
+
+        YearMonth yearMonth = YearMonth.of(actualDate.getYear(), actualDate.getMonth());
+        LocalDate startOfMonth= yearMonth.atDay(1);
+        LocalDate endOfMonth = yearMonth.atEndOfMonth();
+
+        Entry entry = entryRepository.findMostExpansive(startOfMonth, endOfMonth);
+
+        if(entry == null) {throw  new EntryNotFoundException();}
+
+        return EntryMapper.toEntryDto(entry);
+    }
+
+    public List<EntryDto> getFutureOutcomes(LocalDate actualDate) {
+        YearMonth yearMonth = YearMonth.of(actualDate.getYear(), actualDate.getMonth());
+        LocalDate startOfPeriod= yearMonth.atDay(actualDate.getDayOfMonth());
+        LocalDate endOfMonth = yearMonth.atEndOfMonth();
+
+        return EntryMapper.toListEntryDto(entryRepository.findByDateBetween(startOfPeriod, endOfMonth));
+    }
 }
