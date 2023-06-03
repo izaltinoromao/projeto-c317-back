@@ -3,7 +3,6 @@ package br.inatel.projetoc317back.controller;
 import br.inatel.projetoc317back.controller.dto.EntryDto;
 import br.inatel.projetoc317back.controller.dto.SpendDto;
 import br.inatel.projetoc317back.controller.form.EntryForm;
-import br.inatel.projetoc317back.controller.form.FilterDateForm;
 import br.inatel.projetoc317back.model.rest.Message;
 import br.inatel.projetoc317back.service.EntryService;
 import jakarta.validation.Valid;
@@ -12,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -70,9 +70,9 @@ public class EntryController {
 
     @GetMapping("/filter")
     @ResponseStatus(HttpStatus.OK)
-    public List<EntryDto> listEntryFilter(@RequestBody @Valid FilterDateForm filterDateForm) {
+    public List<EntryDto> listEntryFilter(@RequestParam @NotNull LocalDate startDate, @RequestParam @NotNull LocalDate endDate) {
 
-        return entryService.listEntryFilter(filterDateForm);
+        return entryService.listEntryFilter(startDate, endDate);
     }
 
 }

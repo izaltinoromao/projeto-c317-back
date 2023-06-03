@@ -1,6 +1,7 @@
 package br.inatel.projetoc317back.handler;
 
 import br.inatel.projetoc317back.exception.EntryNotFoundException;
+import br.inatel.projetoc317back.exception.TypeExceededPortion;
 import br.inatel.projetoc317back.exception.TypeNotFoundException;
 import br.inatel.projetoc317back.model.rest.Error;
 import org.hibernate.exception.JDBCConnectionException;
@@ -42,6 +43,15 @@ public class ControllerExceptionHandler {
         return Error.builder()
                 .httpStatusCode(HttpStatus.NOT_FOUND)
                 .message(entryNotFoundException.getMessage())
+                .build();
+    }
+
+    @ExceptionHandler(TypeExceededPortion.class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public Error TypeExceededPortion(TypeExceededPortion typeExceededPortion){
+        return Error.builder()
+                .httpStatusCode(HttpStatus.BAD_REQUEST)
+                .message(typeExceededPortion.getMessage())
                 .build();
     }
 

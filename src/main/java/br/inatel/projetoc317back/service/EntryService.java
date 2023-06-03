@@ -3,7 +3,6 @@ package br.inatel.projetoc317back.service;
 import br.inatel.projetoc317back.controller.dto.EntryDto;
 import br.inatel.projetoc317back.controller.dto.SpendDto;
 import br.inatel.projetoc317back.controller.form.EntryForm;
-import br.inatel.projetoc317back.controller.form.FilterDateForm;
 import br.inatel.projetoc317back.exception.EntryNotFoundException;
 import br.inatel.projetoc317back.exception.TypeNotFoundException;
 import br.inatel.projetoc317back.mapper.EntryMapper;
@@ -112,10 +111,8 @@ public class EntryService {
         return spendList;
     }
 
-    public List<EntryDto> listEntryFilter(FilterDateForm filterDateForm) {
+    public List<EntryDto> listEntryFilter(LocalDate startDate, LocalDate endDate) {
 
-        LocalDate startDate = filterDateForm.getStartDate();
-        LocalDate endDate = filterDateForm.getEndDate();
         return EntryMapper.toListEntryDto(entryRepository.findByDateBetween(startDate, endDate));
     }
 }

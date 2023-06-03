@@ -2,6 +2,7 @@ package br.inatel.projetoc317back.service;
 
 import br.inatel.projetoc317back.controller.dto.TypeDto;
 import br.inatel.projetoc317back.controller.form.TypeForm;
+import br.inatel.projetoc317back.exception.TypeExceededPortion;
 import br.inatel.projetoc317back.exception.TypeNotFoundException;
 import br.inatel.projetoc317back.mapper.TypeMapper;
 import br.inatel.projetoc317back.model.Type;
@@ -26,6 +27,7 @@ public class TypeService {
 
     public TypeDto newType(TypeForm typeForm) {
 
+        validadeNewType(typeForm.getPortion());
         Type type = new Type(typeForm);
         typeRepository.save(type);
         return TypeMapper.toTypeDto(type);
@@ -62,4 +64,9 @@ public class TypeService {
         return TypeMapper.toTypeDto(type);
     }
 
+    public void validadeNewType(double newPortion) {
+        List<Type> types = typeRepository.findAll();
+        double portionSum = types.stream().mapToDouble(Type::getPortion).sum();
+        if(portionSum + newPortion > 100) throw new TypeExceededPortion(portionSum + newPortion - 100);
+    }
 }
