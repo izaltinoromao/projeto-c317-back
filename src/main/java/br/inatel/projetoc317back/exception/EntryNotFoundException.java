@@ -8,4 +8,8 @@ public class EntryNotFoundException extends RuntimeException {
         super("Entry with id=" + id + " not found at Data Base.");
     }
 
+    public EntryNotFoundException () {
+        super("Entry was not found at Data Base.");
+    }
+
 }

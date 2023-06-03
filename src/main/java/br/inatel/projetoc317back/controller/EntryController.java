@@ -75,4 +75,18 @@ public class EntryController {
         return entryService.listEntryFilter(startDate, endDate);
     }
 
+    @GetMapping("/most-expansive")
+    @ResponseStatus(HttpStatus.OK)
+    public EntryDto getMostExpansive(@RequestParam @NotNull LocalDate actualDate) {
+
+        return entryService.getMostExpansive(actualDate);
+    }
+
+    @GetMapping("/future-outcomes")
+    @ResponseStatus(HttpStatus.OK)
+    public List<EntryDto> getFutureOutcomes(@RequestParam @NotNull LocalDate actualDate) {
+
+        return entryService.getFutureOutcomes(actualDate);
+    }
+
 }
