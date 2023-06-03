@@ -2,6 +2,7 @@ package br.inatel.projetoc317back.controller.form;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -15,9 +16,9 @@ public class EntryForm {
 
     @NotNull @NotEmpty
     private String name;
-    @NotNull @NotEmpty
+    @NotNull
     private LocalDate date;
-    @NotNull @NotEmpty
+    @NotNull @Positive
     private double value;
     @NotNull @NotEmpty
     private String classification;
