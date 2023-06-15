@@ -3,7 +3,7 @@ services:
 
   postgre:
     image: postgres
-    container_name: postgres-container
+    container_name: postgres-container2
     ports:
       - 5432:5432
     environment:
@@ -31,6 +31,19 @@ services:
       - c317-network
     depends_on:
       - postgre
+
+  c317-front:
+    hostname: C317-front
+    build:
+      context: ../projeto-c317-front
+      dockerfile: Dockerfile
+    container_name: C317-front-container
+    ports:
+      - 4200:4200
+    networks:
+      - c317-network
+    depends_on:
+      - c317-back
 
 networks:
   c317-network:
