@@ -44,7 +44,7 @@ public class EntryService {
 
     public List<EntryDto> listAllEntries() {
 
-        List<Entry> entryList = entryRepository.findAll();
+        List<Entry> entryList = entryRepository.findAllByOrderByDateDesc();
         return EntryMapper.toListEntryDto(entryList);
     }
 
