@@ -15,6 +15,8 @@ public interface EntryRepository extends JpaRepository<Entry, UUID> {
 
     List<Entry> findByDateBetween(LocalDate startOfMonth, LocalDate endOfMonth);
 
+    List<Entry> findAllByOrderByDateDesc();
+
     @Query(value = "SELECT e FROM Entry e WHERE e.value = (SELECT MAX(e2.value) FROM Entry e2 WHERE e2.date BETWEEN :startOfMonth and :endOfMonth)")
     Entry findMostExpansive(@Param("startOfMonth") LocalDate startOfMonth,@Param("endOfMonth") LocalDate endOfMonth);
 

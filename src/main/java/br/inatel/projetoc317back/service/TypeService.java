@@ -35,7 +35,7 @@ public class TypeService {
 
     public List<TypeDto> listAllTypes() {
 
-        List<Type> types = typeRepository.findAll();
+        List<Type> types = typeRepository.findAllByOrderByPortionDesc();
         return TypeMapper.toListTypeDto(types);
     }
 
